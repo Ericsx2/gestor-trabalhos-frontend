@@ -1,0 +1,19 @@
+.textField {
+  display: flex;
+  align-items: center;
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.textField input {
+  text-align: center;
+  font-size: 1rem;
+  padding: 0.9em 2em 1em;
+  overflow: hidden;
+  outline: 0 none;
+}
+
+.textField ::placeholder{
+  color: #283A73;
+}

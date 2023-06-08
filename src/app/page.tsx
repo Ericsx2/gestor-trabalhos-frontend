@@ -1,9 +1,10 @@
-import Image from "next/image";
+import React from 'react';
+import UploadFile from '../components/UploadFile';
 
-export default function Home() {
+function HomePage() {
   return (
-    <main>
-      <h1>Hello</h1>
-    </main>
+      <UploadFile />
   );
 }
+
+export default HomePage;
