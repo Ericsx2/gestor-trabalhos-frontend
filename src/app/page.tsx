@@ -1,9 +1,8 @@
-import React from 'react';
-import UploadFile from '../components/UploadFile';
-
-function HomePage() {
+export default function Home() {
   return (
-      <UploadFile />
+    <main>
+      <h1>Home</h1>
+    </main>
   );
 }
 

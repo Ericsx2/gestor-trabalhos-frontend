@@ -2,53 +2,51 @@
 import { useState } from "react";
 import { CaretDown, CaretUp } from "phosphor-react";
 
-const categories = [
-  {
-    "text":"Categoria 1"
-  },
-  {
-    "text":"Categoria 2"
-  },
-  {
-    "text":"Categoria 3"
-  },
-  {
-    "text":"Categoria 4"
-  }
-];
+interface SelectProps {
+  options: string[];
+}
 
-function Select(){
+function Select({ options }: SelectProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [value, setValue] = useState("");
 
-  return(
-    <div className="relative flex flex-col items-center w-[200px] h-[43px]">
-      <button onClick={() => setIsOpen((prev) => !prev)} className=" bg-gray-300 p-4 w-full flex item-center justify-between text-sm
+  function handleChange(newValue: string) {
+    setValue(newValue);
+    setIsOpen(false);
+  }
+
+  return (
+    <div className="relative flex flex-col items-center shadow-xl">
+      <button
+        onClick={() => setIsOpen((prev) => !prev)}
+        className=" bg-gray-200 p-4 w-full gap-10 flex item-center justify-between rounded-md text-sm
          tracking-wider border-2 border-transparent active:border-gray-600 
-        ">
-          Categorias
-          {
-            !isOpen ?(
-              <CaretDown size={32} className="h-5"/>
-            ):(
-              <CaretUp size={32} className="h-5"/>
-            )
-          }
-        </button>
-
-        {isOpen && (
-          <div className="bg-gray-300 absolute flex flex-col top-16 p-2 w-full text-sm gap-2" >
-              {
-                categories.map((item,i) => (
-                  <div key={i} className="flex w-full h-full justify-between cursor-pointer
-                   hover:bg-blue-900  hover:text-white border-l-transparent hover:border-l-yellow-300 border-l-2 ">
-                    {item.text}
-                  </div>
-                ))
-              }
-          </div>
+        "
+      >
+        {value ? value : "Selecione"}
+        {!isOpen ? (
+          <CaretDown size={32} className="h-5" />
+        ) : (
+          <CaretUp size={32} className="h-5" />
         )}
+      </button>
+
+      {isOpen && (
+        <div className="bg-gray-200 absolute flex flex-col rounded-md top-16 overflow-hidden w-full text-sm gap-2">
+          {options.map((option, i) => (
+            <div
+              key={i}
+              onClick={() => handleChange(option)}
+              className="flex w-full h-full justify-between cursor-pointer p-2 transition-all
+                   hover:bg-blue-900  hover:text-white"
+            >
+              {option}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
-  )
+  );
 }
 
 export default Select;
