@@ -15,8 +15,8 @@ import {
 export default function DashboardSidebar() {
   const navOptions = [
     { name: "Dashboard", href: "/", icon: <LayoutGrid /> },
-    { name: "Trabalhos", href: "/about", icon: <GraduationCap /> },
-    { name: "Usuários", href: "/contact", icon: <User2 /> },
+    { name: "Trabalhos", href: "/trabalhos", icon: <GraduationCap /> },
+    { name: "Usuários", href: "/usuarios", icon: <User2 /> },
     { name: "Configurações", href: "/configuracoes", icon: <Sliders /> },
   ];
 
