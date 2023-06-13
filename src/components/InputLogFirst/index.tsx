@@ -1,5 +1,3 @@
-import { Envelope, IconProps } from "phosphor-react";
-import styles from "./styles.module.css";
 import { HTMLProps } from "react";
 import { UseFormRegister } from "react-hook-form";
 
@@ -18,8 +16,8 @@ export default function Input({
   ...rest
 }: InputProps) {
   return (
-    <div className={styles.textField}>
-      <input type={type} id={id} {...rest} {...register(name)} />
+    <div className="flex items-center relative rounded-full w-4/5 overflow-hidden">
+      <input className="justify-center text-center w-80 text-sm p-3.5 overflow-hidden outline-0" type={type} id={id} {...rest} {...register(name)} />
     </div>
   );
 }
