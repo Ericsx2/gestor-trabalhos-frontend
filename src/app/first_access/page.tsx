@@ -3,8 +3,6 @@
 import React from "react";
 import Input from "@/components/InputLogFirst";
 import Image from "next/image";
-import logoColcic from "../../assets/colcicLogo.png";
-import firstAccessImage from "../../assets/firstAccessImage.png";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -40,21 +38,27 @@ export default function Login() {
             <div className="p-6 flex flex-col items-center justify-around">
               <Image
                 className="w-5/8 mt-5"
-                src={logoColcic}
+                src="/colcicLogo.png"
                 alt="Logo Colcic"
+                width={350}
+                height={350}
               />
 
               <Image
                 className="w-80 mt-5"
-                src={firstAccessImage}
+                src="/firstAccessImage.png"
                 alt="Imagem de um homem em um computador teclando"
+                width={350}
+                height={350}
               />
             </div>
           </div>
           <div className="w-[46vw] flex justify-center items-center bg-[#283A73]">
             <div className="h-[50vh] flex flex-col items-center justify-center">
               <div className="text-4xl mb-6">
-                <h3 className="font-sans font-bold text-white">Primeiro Acesso</h3>
+                <h3 className="font-sans font-bold text-white">
+                  Primeiro Acesso
+                </h3>
               </div>
               <form
                 className="flex flex-col items-center gap-2 font-sans"
@@ -79,7 +83,9 @@ export default function Login() {
                   >
                     Enviar
                   </button>
-                  <button className="mt-4 mx-2 w-16 h-9 rounded-md font-medium font-sans bg-[#F0E63A] hover:bg-[#F0D400]">Voltar</button>
+                  <button className="mt-4 mx-2 w-16 h-9 rounded-md font-medium font-sans bg-[#F0E63A] hover:bg-[#F0D400]">
+                    Voltar
+                  </button>
                 </div>
               </form>
             </div>

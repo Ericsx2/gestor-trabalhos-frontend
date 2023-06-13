@@ -2,8 +2,6 @@
 
 import Input from "@/components/InputLogFirst";
 import Image from "next/image";
-import logoColcic from "../../assets/colcicLogo.png";
-import loginImage from "../../assets/loginImage.png";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -40,14 +38,18 @@ export default function Login() {
             <div className="p-6 flex flex-col items-center justify-around">
               <Image
                 className="w-5/8 mt-5"
-                src={logoColcic}
+                src="/colcicLogo.png"
                 alt="Logo Colcic"
+                width={350}
+                height={350}
               />
 
               <Image
                 className="w-80 mt-5"
-                src={loginImage}
+                src="/loginImage.png"
                 alt="Imagem de um homem em um computador teclando"
+                width={350}
+                height={350}
               />
             </div>
           </div>
@@ -74,7 +76,7 @@ export default function Login() {
                   placeholder="Password"
                   register={register}
                 />
-                 {errors.email && isSubmitted && (
+                {errors.email && isSubmitted && (
                   <div className="mx-2 font-medium text-white">
                     {errors.email?.message}
                   </div>

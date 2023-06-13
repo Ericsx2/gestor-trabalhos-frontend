@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import logoColcic from "../../assets/colcicDashboardLogo.png";
 import {
   LayoutGrid,
   GraduationCap,
@@ -34,7 +33,12 @@ export default function DashboardSidebar() {
   return (
     <aside className="flex flex-col h-screen bg-white w-64 border-r shadow-lg shadow-slate-900 fixed top-0 items-center">
       <Link href="/" className="m-5 w-24 rounded-full">
-        <Image src={logoColcic} width={96} height={96} alt="Logo Colcic" />
+        <Image
+          src="/colcicDashboardLogo.png"
+          width={96}
+          height={96}
+          alt="Logo Colcic"
+        />
       </Link>
 
       <nav className="text-slate-400 mt-12">
