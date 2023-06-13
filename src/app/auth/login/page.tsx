@@ -32,7 +32,7 @@ export default function Login() {
 
   return (
     <main>
-      <div className="flex justify-center items-center h-screen bg-neutral-800">
+      <div className="flex justify-center items-center h-screen bg-gray-200">
         <div className="w-3/5 h-4/5 flex overflow-hidden">
           <div className="w-1/2 bg-white">
             <div className="p-6 flex flex-col items-center justify-around">

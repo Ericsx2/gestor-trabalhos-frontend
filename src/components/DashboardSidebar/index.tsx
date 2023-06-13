@@ -31,7 +31,10 @@ export default function DashboardSidebar() {
   };
 
   return (
-    <aside className="flex flex-col h-screen bg-white w-64 border-r shadow-lg shadow-slate-900 fixed top-0 items-center">
+    <aside
+      style={{ gridArea: "SD" }}
+      className="flex flex-col h-screen bg-white  border-r shadow-lg shadow-slate-900 items-center"
+    >
       <Link href="/" className="m-5 w-24 rounded-full">
         <Image
           src="/colcicDashboardLogo.png"

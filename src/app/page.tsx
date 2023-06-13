@@ -1,12 +1,10 @@
 import Image from "next/image";
 import ProjectSearch from "./project-search/page";
+import NavBar from "@/components/NavBar";
 
 export default function Home() {
   return (
     <main className="h-screen">
-      <div className="h-6">
-        <h2>NavBar</h2>
-      </div>
       <div className="h-4/5 bg-blue-900 flex p-6">
         <div className="h-full w-1/2 m-6">
           <div className="h-1/3 flex items-end">

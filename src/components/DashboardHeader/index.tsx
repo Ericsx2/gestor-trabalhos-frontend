@@ -1,6 +1,15 @@
-export default function DashboardHeader(nome: String, funcao: String) {
+export default function DashboardHeader({
+  nome,
+  funcao,
+}: {
+  nome: string;
+  funcao: string;
+}) {
   return (
-    <header className="bg-white py-4 px-4 flex ml-64 items-center justify-end h-24">
+    <header
+      style={{ gridArea: "HE" }}
+      className="bg-white py-4 px-4 flex ml-64 items-center justify-end"
+    >
       <div className="mr-4">
         <div className="text-gray-700 font-semibold">
           {nome ? nome : "Usuário"}
