@@ -1,9 +1,9 @@
 import React from 'react';
-import Login from '../components/Login';
+import UploadFile from '../components/UploadFile';
 
 function HomePage() {
   return (
-      <Login />
+      <UploadFile />
   );
 }
 
