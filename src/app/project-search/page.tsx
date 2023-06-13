@@ -60,7 +60,6 @@ function projectSearch(){
       <div className="grid gap-10">
         <div className="flex justify-start items-center gap-5">
             <Select/>
-            <Input/>
         </div>
 
         <div className="grid w-[979px]">
