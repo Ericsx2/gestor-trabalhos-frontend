@@ -4,7 +4,6 @@ import Input from "@/components/InputLogFirst";
 import Image from "next/image";
 import logoColcic from "../../assets/colcicLogo.png";
 import loginImage from "../../assets/loginImage.png";
-import styles from "./styles.module.css";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -35,30 +34,30 @@ export default function Login() {
 
   return (
     <main>
-      <div className={styles.loginContainer}>
-        <div className={styles.loginWrapper}>
-          <div className={styles.loginImageSection}>
-            <div className={styles.loginImageContainer}>
+      <div className="flex justify-center items-center h-screen bg-neutral-800">
+        <div className="w-3/5 h-4/5 flex overflow-hidden">
+          <div className="w-1/2 bg-white">
+            <div className="p-6 flex flex-col items-center justify-around">
               <Image
-                className={styles.loginColcicImage}
+                className="w-5/8 mt-5"
                 src={logoColcic}
                 alt="Logo Colcic"
               />
 
               <Image
-                className={styles.loginComputerImage}
+                className="w-80 mt-5"
                 src={loginImage}
-                alt="Homem no Computador Teclando"
+                alt="Imagem de um homem em um computador teclando"
               />
             </div>
           </div>
-          <div className={styles.loginFormContainer}>
-            <div className={styles.loginFormWrapper}>
-              <div className={styles.loginFormHeader}>
-                <h3 className={styles.loginFormTitleFont}>Login</h3>
+          <div className="w-1/2 flex justify-center items-center bg-[#283A73]">
+            <div className="flex flex-col items-center justify-center">
+              <div className="text-4xl mb-6">
+                <h3 className="font-sans font-bold text-white">Login</h3>
               </div>
               <form
-                className={styles.loginForm}
+                className="flex flex-col items-center gap-2 font-sans"
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <Input
@@ -68,11 +67,6 @@ export default function Login() {
                   placeholder="User"
                   register={register}
                 />
-                {errors.email && !isSubmitted && (
-                  <div className={styles.errorBalloonEmail}>
-                    {errors.email?.message}
-                  </div>
-                )}
                 <Input
                   id="password"
                   name="password"
@@ -80,15 +74,32 @@ export default function Login() {
                   placeholder="Password"
                   register={register}
                 />
-                {errors.password && !isSubmitted && (
-                  <div className={styles.errorBalloonPassword}>
+                 {errors.email && isSubmitted && (
+                  <div className="mx-2 font-medium text-white">
+                    {errors.email?.message}
+                  </div>
+                )}
+                {errors.password && isSubmitted && (
+                  <div className="mx-2 font-medium text-white">
                     {errors.password?.message}
                   </div>
                 )}
-                <button>Entrar</button>
-                <div className={styles.loginPasswordLostAndFirstAccess}>
-                  <a href="#">Esqueceu a senha?</a>
-                  <a href="#">Primeiro Acesso?</a>
+                <button className="mt-4 w-16 h-9 rounded-xl font-medium font-sans bg-[#F0E63A] hover:bg-[#F0D400]">
+                  Entrar
+                </button>
+                <div className="mt-4 inline-block w-auto text-white">
+                  <a
+                    className="mx-2 font-medium hover:underline hover:decoration-[#F0E63A]"
+                    href="#"
+                  >
+                    Esqueceu a senha?
+                  </a>
+                  <a
+                    className="mx-2 font-medium hover:underline hover:decoration-[#F0E63A]"
+                    href="#"
+                  >
+                    Primeiro Acesso?
+                  </a>
                 </div>
               </form>
             </div>
