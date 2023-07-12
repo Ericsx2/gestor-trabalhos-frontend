@@ -1,23 +1,47 @@
-import CardComponent from "../Card";
+'use client';
+import Link from 'next/link';
+import Card from '../Card';
+import { useRef } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface CardListProps {
+  listTitle: string;
   cards: any[];
 }
 
-export default function CardList({ cards }: CardListProps) {
+export default function CardList({ cards, listTitle }: CardListProps) {
+  const listRef = useRef<HTMLDivElement>(null);
+
+  function next() {
+    if (listRef.current) {
+      listRef.current.scrollLeft += listRef.current.scrollLeft / 2;
+    }
+  }
+
+  function prev() {
+    if (listRef.current) {
+      listRef.current.scrollLeft -= listRef.current.scrollLeft / 2;
+    }
+  }
+
   return (
-    <div className="w-full h-full bg-white overflow-scroll overflow-x-auto p-2">
-      <div className="text-2xl p-10">
-        <h1>Projetos</h1>
+    <div className="flex flex-col w-full p-8 gap-4">
+      <div className="flex items-center justify-between">
+        <span className="text-2xl font-bold">{listTitle}</span>
+        <span className="underline text-blue-700">
+          <Link href="/projects">Ver Todos</Link>
+        </span>
       </div>
-      <div className="flex flex-col items-center gap-6">
-        <CardComponent />
-        <CardComponent />
-        <CardComponent />
-        <CardComponent />
-        <CardComponent />
-        <CardComponent />
-      </div>
+      <section>
+        <div
+          className="flex items-center gap-4 scroll-smooth overflow-hidden relative"
+          ref={listRef}
+        >
+          {cards.map((card, key) => {
+            return <Card key={key} data={card} />;
+          })}
+        </div>
+      </section>
     </div>
   );
 }

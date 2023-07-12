@@ -1,10 +1,24 @@
-import Image from "next/image";
-import ProjectSearch from "./project-search/page";
-import NavBar from "@/components/NavBar";
+import Image from 'next/image';
+import CardList from '@/components/CardList';
+import CircularLoader from '@/components/CircularLoader';
 
-export default function Home() {
+async function getData() {
+  try {
+    const response = await fetch(
+      `http://localhost:3333/project/public/recents`
+    );
+    return response.json();
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export default async function Home() {
+  const cards = await getData();
+  console.log(cards);
+
   return (
-    <main className="h-screen">
+    <main>
       <div className="h-4/5 bg-blue-900 flex p-6">
         <div className="h-full w-1/2 m-6">
           <div className="h-1/3 flex items-end">
@@ -43,8 +57,8 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="h-auto">
-        <ProjectSearch />
+      <div>
+        <CardList listTitle="Projetos Recentes" cards={cards} />
       </div>
     </main>
   );

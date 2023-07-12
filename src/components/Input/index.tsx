@@ -1,32 +1,26 @@
-import { HTMLProps } from "react";
-import { UseFormRegister } from "react-hook-form";
+'use client';
+import * as Label from '@radix-ui/react-label';
+import { ForwardedRef, HTMLAttributes, HTMLProps, forwardRef } from 'react';
 
 interface InputProps extends HTMLProps<HTMLInputElement> {
-  icon?: React.ReactNode;
-  placeholder: string;
-  name: string;
-  register: UseFormRegister<any>;
-  background?: string;
+  id: string;
+  label: string;
 }
 
-export default function Input({
-  icon,
-  register,
-  name,
-  background,
-  ...rest
-}: InputProps) {
+const Input = forwardRef(function Input(
+  { label, ...rest }: InputProps,
+  forwardedRef: ForwardedRef<HTMLInputElement>
+) {
   return (
-    <div
-      className={`flex flex-1 bg-gray-200 border-2 border-gray-300 rounded-md p-1.5 transition-all focus-within:border-blue-300`}
-    >
+    <div className="flex flex-col">
+      <Label.Root htmlFor={rest.id}>{label}</Label.Root>
       <input
-        className="bg-transparent focus:outline-none grow"
+        className="border border-gray-300 rounded-md p-2 transition-all focus:outline-blue-500 focus:border-blue-500"
+        ref={forwardedRef}
         {...rest}
-        {...register(name)}
       />
-      {icon}
     </div>
   );
-}
+});
 
+export default Input;

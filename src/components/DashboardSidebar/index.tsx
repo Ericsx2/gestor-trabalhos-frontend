@@ -1,28 +1,46 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import Image from 'next/image';
+import Link from 'next/link';
+import { redirect, usePathname } from 'next/navigation';
 import {
   LayoutGrid,
   GraduationCap,
   User2,
-  Sliders,
   LogIn as LogOut,
-} from "lucide-react";
+  User,
+  GitPullRequest,
+} from 'lucide-react';
+import useAuth from '@/hooks/useAuth';
 
 export default function DashboardSidebar() {
+  const { user, signOut } = useAuth();
   const navOptions = [
-    { name: "Dashboard", href: "/", icon: <LayoutGrid /> },
-    { name: "Trabalhos", href: "/trabalhos", icon: <GraduationCap /> },
-    { name: "Usuários", href: "/usuarios", icon: <User2 /> },
-    { name: "Configurações", href: "/configuracoes", icon: <Sliders /> },
+    { name: 'Dashboard', href: '/dashboard', icon: <LayoutGrid /> },
+    {
+      name: 'Trabalhos',
+      href: '/dashboard/projects',
+      icon: <GraduationCap />,
+    },
+    {
+      name: 'Requisições',
+      href: '/dashboard/registration_requests',
+      icon: <GitPullRequest />,
+      admin: true,
+    },
+    {
+      name: 'Usuários',
+      href: '/dashboard/users',
+      icon: <User2 />,
+      admin: true,
+    },
+    { name: 'Perfil', href: '/dashboard/profile', icon: <User /> },
   ];
 
   const inactiveLink =
-    "flex m-1 p-4 gap-4 rounded-3xl transition-all hover:bg-slate-200 hover:text-blue-800";
+    'flex m-1 p-4 gap-4 rounded-3xl transition-all hover:bg-slate-200 hover:text-blue-800';
   const activeLink =
-    "flex m-1 p-4 gap-4 rounded-3xl bg-slate-200 text-blue-800";
+    'flex m-1 p-4 gap-4 rounded-3xl bg-slate-200 text-blue-800';
   const pathname = usePathname();
   let courrentActive = pathname;
 
@@ -30,10 +48,15 @@ export default function DashboardSidebar() {
     courrentActive = tabPath;
   };
 
+  function handleSignOut() {
+    signOut();
+    redirect('/');
+  }
+
   return (
     <aside
-      style={{ gridArea: "SD" }}
-      className="flex flex-col h-screen bg-white  border-r shadow-lg shadow-slate-900 items-center"
+      style={{ gridArea: 'SD' }}
+      className="flex flex-col h-full bg-white  border-r shadow-lg shadow-slate-900 items-center"
     >
       <Link href="/" className="m-5 w-24 rounded-full">
         <Image
@@ -45,22 +68,28 @@ export default function DashboardSidebar() {
       </Link>
 
       <nav className="text-slate-400 mt-12">
-        {navOptions.map((option, index) => (
-          <Link
-            href={option.href}
-            key={index}
-            className={`${
-              courrentActive === option.href ? activeLink : inactiveLink
-            }`}
-            onClick={() => handleTabClick(`${option.href}`)}
-          >
-            {option.icon}
-            {option.name}
-          </Link>
-        ))}
+        {navOptions.map((option, index) => {
+          if (option.admin && user?.role !== 'Admin') return null;
+          return (
+            <Link
+              href={option.href}
+              key={index}
+              className={`${
+                courrentActive === option.href ? activeLink : inactiveLink
+              }`}
+              onClick={() => handleTabClick(`${option.href}`)}
+            >
+              {option.icon}
+              {option.name}
+            </Link>
+          );
+        })}
       </nav>
 
-      <button className="absolute bottom-12 flex p-4 gap-4 rounded-3xl text-slate-400 hover:bg-slate-200 hover:text-blue-800 transition-all">
+      <button
+        onClick={() => handleSignOut()}
+        className="absolute bottom-12 flex p-4 gap-4 rounded-3xl text-slate-400 hover:bg-slate-200 hover:text-blue-800 transition-all"
+      >
         <LogOut />
         <span>Sair</span>
       </button>

@@ -1,52 +1,37 @@
 'use client';
-import CircularLoader from '@/components/CircularLoader';
+
+import React, { useState } from 'react';
 import Input from '@/components/Input';
-import useAuth from '@/hooks/useAuth';
-import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import CircularLoader from '@/components/CircularLoader';
 import { ToastContainer, toast } from 'react-toastify';
-import { z } from 'zod';
-
-const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
-});
-
-type LoginData = z.infer<typeof loginSchema>;
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginData>({
+  const { register, handleSubmit } = useForm<{ registration: string }>({
     mode: 'onBlur',
-    resolver: zodResolver(loginSchema),
   });
   const router = useRouter();
-  const { signIn } = useAuth();
 
-  async function onSubmit(data: LoginData) {
+  async function onSubmit({ registration }: { registration: string }) {
     setLoading(true);
     try {
-      const parsedData = loginSchema.parse(data);
-      await signIn(parsedData);
-      toast('Login efetuado com sucesso', {
+      await axios.post('http://localhost:3333/firstAccess', { registration });
+      toast('Solicitação realizada com sucesso', {
         position: 'top-right',
         autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         type: 'success',
         theme: 'light',
-        onClose: () => router.push('/dashboard'),
+        onClose: () => router.push('/'),
       });
     } catch (e) {
-      toast('Erro', {
+      toast('Houve algum Erro', {
         position: 'top-right',
         autoClose: 2000,
         hideProgressBar: false,
@@ -68,7 +53,7 @@ export default function Login() {
           <div className="flex h-full">
             <section className="flex-1 grid place-items-center bg-blue-800">
               <Image
-                src="/loginImage.png"
+                src="/firstAccessImage.png"
                 width={300}
                 height={300}
                 alt="Imagem da página de login"
@@ -77,43 +62,27 @@ export default function Login() {
             <section className="flex-1 grid place-items-center">
               <div className="w-full h-full flex items-center justify-center flex-col gap-4 animate-fade">
                 <div className="self-center mb-8">
-                  <span className="font-medium text-3xl">Faça Login</span>
+                  <span className="font-medium text-3xl">Primeiro Acesso</span>
                 </div>
                 <form
                   className="flex flex-col gap-6 w-3/5"
                   onSubmit={handleSubmit(onSubmit)}
                 >
                   <Input
-                    key="email"
-                    label="Email"
-                    id="email"
-                    {...register('email')}
+                    label="Matrícula"
+                    id="registration"
+                    {...register('registration')}
                   />
-                  <div>
-                    <Input
-                      label="Password"
-                      id="password"
-                      type="password"
-                      key="password"
-                      {...register('password')}
-                    />
-                    <span className="flex pt-2 justify-end w-full text-xs font-bold text-blue-600">
-                      <Link href="/recovery_password">Esqueci minha Senha</Link>
-                    </span>
-                  </div>
-                  <button
-                    type="submit"
-                    className="rounded-md py-2 bg-yellow-400 font-medium"
-                  >
-                    {loading ? <CircularLoader /> : 'Entrar'}
+                  <button className="rounded-md py-2 bg-yellow-400 font-medium">
+                    {loading ? <CircularLoader /> : 'Solicitar Acesso'}
                   </button>
                 </form>
                 <div>
                   <span className="text-sm">
-                    Não possui cadastro?{' '}
+                    Já possui cadastro?{' '}
                     <Link
                       className="font-bold text-blue-600"
-                      href="/auth/first_access"
+                      href="/auth/login"
                     >
                       Clique aqui
                     </Link>

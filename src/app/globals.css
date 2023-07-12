@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
 .dashboard-layout {
   display: grid;
   grid-template-columns: 13rem 1fr;

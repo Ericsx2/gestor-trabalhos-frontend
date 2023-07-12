@@ -1,7 +1,13 @@
+'use client';
+
+import DashboardPageTitle from '@/components/DashboardPageTitle';
+import useAuth from '@/hooks/useAuth';
+
 export default function Dashboard() {
+  const { user } = useAuth();
   return (
-    <main>
-      <h1>Dashboard</h1>
+    <main className="p-8">
+      <DashboardPageTitle label={`Olá, ${user?.name}`} />
     </main>
   );
 }

@@ -1,88 +1,47 @@
 "use client";
+import { FileImage } from "lucide-react";
+import { ChangeEvent, HTMLAttributes, HTMLProps, useState } from "react";
+import * as Label from "@radix-ui/react-label";
 
-import { useState, useCallback, useRef } from "react";
-import styles from "./styles.module.css";
+interface FileInputProps
+  extends HTMLProps<HTMLInputElement>,
+    HTMLAttributes<HTMLInputElement> {
+  label?: string;
+}
 
-export default function FileUpload() {
-  const [fileSrc, setFileSrc] = useState<string | ArrayBuffer | null>(null);
+export default function FileUpload({
+  id,
+  label,
+  onChange,
+  ...rest
+}: FileInputProps) {
   const [fileName, setFileName] = useState("");
-  const [dropText, setDropText] = useState(
-    "Arraste e solte o PDF ou clique aqui"
-  );
-
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-  const handleFileChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0];
-
-      if (file) {
-        const reader = new FileReader();
-
-        reader.onload = (e) => {
-          const result = e.target?.result ?? null;
-          setFileSrc(result);
-          setFileName(file.name);
-          setDropText(file.name);
-        };
-        reader.readAsDataURL(file);
-      }
-    },
-    []
-  );
-
-  const removeUpload = useCallback(() => {
-    const fileInput = fileInputRef.current;
-    if (fileInput) {
-      fileInput.value = "";
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    if (event.target.files) {
+      setFileName(event.target.files[0].name ?? "");
     }
-
-    setFileSrc(null);
-    setFileName("");
-    setDropText("Arraste e solte o PDF ou clique aqui");
-  }, []);
-
-  const handleFileSubmit = useCallback(() => {
-    if (fileSrc) {
-      console.log("Arquivo enviado:", fileSrc);
-    }
-  }, [fileSrc]);
+    if (onChange) onChange(event);
+  }
 
   return (
-    <div className="w-[100vw] h-[100vh] bg-neutral-800 flex items-center justify-center">
-      <div className="rounded-lg w-[30vw] h-[40vh] bg-white overflow-hidden flex justify-center items-center p-8">
-        <div className="bg-white w-[90vw] m-auto p-1">
-          <div className="flex items-center justify-center m-3 w-[25vw] h-[20vh] border-dashed border-4 border-[#283A73] hover:bg-[#283A73] hover:border-[#fff]">
-            <input
-              ref={fileInputRef}
-              className="absolute p-0 m-0 w-[25%] h-[20%] opacity-0 cursor-pointer"
-              type="file"
-              onChange={handleFileChange}
-              accept="application/pdf"
-            />
-            <div className="flex items-center justify-center">
-                <h3 className="uppercase text-[#4561BD]">{dropText}</h3>
-            </div>
-          </div>
-          <div className="flex items-center justify-center whitespace-normal">
-            <div className="text-white font-bold">
-              <button
-                type="button"
-                onClick={removeUpload}
-                className="w-28 p-2 m-2 cursor-pointer rounded-md uppercase bg-[#283A73] hover:bg-[#4561BD]"
-              >
-                Remover
-              </button>
-              <button
-                type="button"
-                onClick={handleFileSubmit}
-                className="w-28 p-2 m-2 cursor-pointer rounded-md uppercase bg-[#283A73] hover:bg-[#4561BD]"
-              >
-                Enviar
-              </button>
-            </div>
-          </div>
-        </div>
+    <div>
+      <Label.Root htmlFor={id}>{label}</Label.Root>
+      <div className=" flex items-center gap-2 rounded-md border relative p-2 text-gray-600">
+        <label className="bg-blue-700 rounded-md p-2 text-white" htmlFor={id}>
+          Selecione
+        </label>
+        {fileName ? (
+          <>
+            <FileImage />
+            <span>{fileName}</span>
+          </>
+        ) : null}
+        <input
+          type="file"
+          id={id}
+          className="absolute inset-0 opacity-0 cursor-pointer"
+          onChange={handleChange}
+        />
       </div>
     </div>
   );

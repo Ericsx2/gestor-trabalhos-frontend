@@ -1,9 +1,18 @@
-import Image from "next/image";
-import Link from "next/link";
+import classNames from 'classnames';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function NavBar() {
+  const pathname = usePathname();
+  const current = pathname.split('/')[1];
+
+  function isSelected(path: string) {
+    return current === path ? true : false;
+  }
+
   return (
-    <header className="max-h-16 flex justify-between pl-20 pr-36">
+    <header className="max-h-16 flex justify-between px-14">
       <Link href="/">
         <Image
           className="h-full aspect-auto object-contain"
@@ -16,36 +25,43 @@ export default function NavBar() {
 
       <nav className="flex items-center">
         <Link
-          className="h-full px-3 flex items-center transition-all hover:bg-blue-600 hover:text-white"
+          className={classNames(
+            'h-full px-3 flex items-center transition-all hover:bg-blue-600 hover:text-white',
+            isSelected('') ? 'bg-blue-600 text-white' : ''
+          )}
           href="/"
         >
           Home
         </Link>
         <Link
-          className="h-full px-3 flex items-center transition-all hover:bg-blue-600 hover:text-white"
-          href="/"
+          className={classNames(
+            'h-full px-3 flex items-center transition-all hover:bg-blue-600 hover:text-white',
+            isSelected('projects') ? 'bg-blue-600 text-white' : ''
+          )}
+          href="/projects"
         >
-          Home
+          Projetos
         </Link>
         <Link
-          className="h-full px-3 flex items-center transition-all hover:bg-blue-600 hover:text-white"
-          href="/"
+          className={classNames(
+            'h-full px-3 flex items-center transition-all hover:bg-blue-600 hover:text-white'
+          )}
+          href="https://colcic.usec.br"
+          target="_blank"
         >
-          Home
-        </Link>
-        <Link
-          className="h-full px-3 flex items-center transition-all hover:bg-blue-600 hover:text-white"
-          href="/"
-        >
-          Home
-        </Link>
-        <Link
-          className="h-full px-3 flex items-center transition-all hover:bg-blue-600 hover:text-white"
-          href="/"
-        >
-          Home
+          Site Colcic
         </Link>
       </nav>
+      <div>
+        <Link
+          className={classNames(
+            'h-full px-3 flex items-center transition-all hover:bg-blue-600 hover:text-white'
+          )}
+          href="/auth/login"
+        >
+          Entrar
+        </Link>
+      </div>
     </header>
   );
 }
