@@ -34,7 +34,6 @@ export default function DashboardSidebar() {
       icon: <User2 />,
       admin: true,
     },
-    { name: 'Perfil', href: '/dashboard/profile', icon: <User /> },
   ];
 
   const inactiveLink =
